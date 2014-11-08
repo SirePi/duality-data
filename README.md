@@ -1,4 +1,4 @@
 duality-data
 ============
 
-File-based data access plugin for Duality
+File-based data access plugin for [Duality](http://duality.adamslair.net).
