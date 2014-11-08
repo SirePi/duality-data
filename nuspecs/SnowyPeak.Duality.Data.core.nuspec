@@ -5,17 +5,19 @@
         <version>1.0.0</version>
         <authors>Pilati Alessandro</authors>
         <owners>Pilati Alessandro</owners>
+        <licenseUrl>https://github.com/SirePi/duality-data/blob/master/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/SirePi/duality-data</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>This plugin provides facilities for importing and managing text-based files in general, and text-based data files such as xml/xsd and csv in particular.</description>
         <summary>SnowyPeak.Duality.Data core plugin</summary>
-        <tags>Duality Plugin File</tags>
+        <tags>Duality Plugin Data File</tags>
         <dependencies>
             <dependency id="AdamsLair.Duality" version="1.3.0" />
         </dependencies>
     </metadata>
     <files>
-        <file src="_NewDuality\DualityDataResources\Core\bin\Debug\SnowyPeak.Duality.Data.core.dll" target="lib\SnowyPeak.Duality.Data.core.dll" />
-        <file src="_NewDuality\DualityDataResources\Core\bin\Debug\SnowyPeak.Duality.Data.core.pdb" target="lib\SnowyPeak.Duality.Data.core.pdb" />
-        <file src="_NewDuality\DualityDataResources\Core\bin\Debug\SnowyPeak.Duality.Data.core.xml" target="lib\SnowyPeak.Duality.Data.core.xml" />
+        <file src="..\Core\bin\Release\SnowyPeak.Duality.Data.core.dll" target="lib\SnowyPeak.Duality.Data.core.dll" />
+        <file src="..\Core\bin\Release\SnowyPeak.Duality.Data.core.pdb" target="lib\SnowyPeak.Duality.Data.core.pdb" />
+        <file src="..\Core\bin\Release\SnowyPeak.Duality.Data.core.xml" target="lib\SnowyPeak.Duality.Data.core.xml" />
     </files>
 </package>

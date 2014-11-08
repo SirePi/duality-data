@@ -1,0 +1,7 @@
+Core/bin
+Core/obj
+Editor/bin
+Editor/obj
+nupkgs
+packages
+*.suo
