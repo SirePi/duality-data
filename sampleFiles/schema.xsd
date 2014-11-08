@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="schema"
+    targetNamespace="urn:TestSchema"
+    elementFormDefault="qualified"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  <xs:element name="root">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element name="leaf">
+          <xs:complexType>
+            <xs:attribute name="name" type="xs:normalizedString" use="required" />
+            <xs:attribute name="value" type="xs:normalizedString" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:normalizedString" use="required" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
