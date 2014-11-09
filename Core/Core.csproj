@@ -8,7 +8,7 @@
     <ProjectGuid>{07121522-7357-49FC-9A45-43E6ADB7F8FA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SnowyPeak.Duality.Data</RootNamespace>
+    <RootNamespace>SnowyPeak.Duality.Plugins.Data</RootNamespace>
     <AssemblyName>SnowyPeak.Duality.Data.core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -32,7 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\SnowyPeak.Duality.Data.core.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\SnowyPeak.Duality.Data.core.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Duality, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">

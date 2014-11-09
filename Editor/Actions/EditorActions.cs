@@ -7,10 +7,10 @@ using System.Text;
 
 using Duality.Editor;
 
-using SnowyPeak.Duality.Data.Editor.Properties;
-using SnowyPeak.Duality.Data.Resources;
+using SnowyPeak.Duality.Editor.Plugins.Data.Properties;
+using SnowyPeak.Duality.Plugins.Data.Resources;
 
-namespace SnowyPeak.Duality.Data.Editor.Actions
+namespace SnowyPeak.Duality.Plugins.Editor.Data.Actions
 {
     /// <summary>
     /// Double-click binding for the editor

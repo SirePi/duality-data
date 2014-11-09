@@ -8,7 +8,7 @@
     <ProjectGuid>{FFDDCE1C-EE01-4B37-8D4B-34C74B5AB1AE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SnowyPeak.Duality.Data.Editor</RootNamespace>
+    <RootNamespace>SnowyPeak.Duality.Editor.Plugins.Data</RootNamespace>
     <AssemblyName>SnowyPeak.Duality.Data.editor</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

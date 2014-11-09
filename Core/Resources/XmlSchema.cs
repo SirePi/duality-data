@@ -7,15 +7,15 @@ using System.Xml;
 using Duality;
 using Duality.Editor;
 
-using SnowyPeak.Duality.Data.Properties;
+using SnowyPeak.Duality.Plugins.Data.Properties;
 
-namespace SnowyPeak.Duality.Data.Resources
+namespace SnowyPeak.Duality.Plugins.Data.Resources
 {
     /// <summary>
     /// Represents an arbitrary piece of XML-formatted data.
     /// </summary>
     [Serializable]
-    [EditorHintCategory(typeof(Res), ResNames.CategoryFile)]
+    [EditorHintCategory(typeof(Res), ResNames.CategoryData)]
     [EditorHintImage(typeof(Res), ResNames.ImageXsd)]
     public class XmlSchema : TextFile
     {

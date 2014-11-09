@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SnowyPeak.Duality.Data.Properties
+namespace SnowyPeak.Duality.Plugins.Data.Properties
 {
 #pragma warning disable 1591
     public static class ResNames

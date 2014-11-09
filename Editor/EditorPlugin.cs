@@ -8,9 +8,9 @@ using Duality;
 using Duality.Editor;
 using Duality.Editor.Forms;
 
-using SnowyPeak.Duality.Data.Resources;
+using SnowyPeak.Duality.Plugins.Data.Resources;
 
-namespace SnowyPeak.Duality.Data.Editor
+namespace SnowyPeak.Duality.Editor.Plugins.Data
 {
     public class DualityDataEditorPlugin : EditorPlugin
     {
@@ -25,6 +25,12 @@ namespace SnowyPeak.Duality.Data.Editor
 
             FileEventManager.ResourceModified += this.FileEventManager_ResourceChanged;
             DualityEditorApp.ObjectPropertyChanged += this.DualityEditorApp_ObjectPropertyChanged;
+
+            //Revalidating all XmlData
+            foreach (ContentRef<XmlData> xd in ContentProvider.GetLoadedContent<XmlData>())
+            {
+                xd.Res.Validate();
+            }
         }
 
         private void DualityEditorApp_ObjectPropertyChanged(object sender, ObjectPropertyChangedEventArgs e)
@@ -53,7 +59,9 @@ namespace SnowyPeak.Duality.Data.Editor
                 foreach (ContentRef<XmlData> xd in ContentProvider.GetLoadedContent<XmlData>())
                 {
                     if (!xd.IsAvailable) continue;
-                    if (xd.Res.Schema == schemaRef)
+
+                    // Issue #2. Missing check on Schema.IsExplicitNull would cause an endless loop 
+                    if (!xd.Res.Schema.IsExplicitNull && xd.Res.Schema == schemaRef)
                     {
                         xd.Res.Validate();
 

@@ -8,15 +8,15 @@ using Duality;
 using Duality.Cloning;
 using Duality.Editor;
 
-using SnowyPeak.Duality.Data.Properties;
+using SnowyPeak.Duality.Plugins.Data.Properties;
 
-namespace SnowyPeak.Duality.Data.Resources
+namespace SnowyPeak.Duality.Plugins.Data.Resources
 {
     /// <summary>
     /// Represents a validated XmlDocument which consists of an XmlFile and an optional XmlSchema
     /// </summary>
-    /// <seealso cref="SnowyPeak.Duality.Data.Resources.XmlData"/>
-    /// <seealso cref="SnowyPeak.Duality.Data.Resources.XmlSchema"/>
+    /// <seealso cref="SnowyPeak.Duality.Plugins.Data.Resources.XmlData"/>
+    /// <seealso cref="SnowyPeak.Duality.Plugins.Data.Resources.XmlSchema"/>
     [Serializable]
     [EditorHintCategory(typeof(Res), ResNames.CategoryData)]
     [EditorHintImage(typeof(Res), ResNames.ImageXdata)]

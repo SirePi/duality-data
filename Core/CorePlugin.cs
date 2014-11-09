@@ -2,7 +2,7 @@
 
 using Duality;
 
-namespace SnowyPeak.Duality.Data
+namespace SnowyPeak.Duality.Plugins.Data
 {
     /// <summary>
     /// Defines the core plugin.

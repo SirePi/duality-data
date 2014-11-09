@@ -8,10 +8,10 @@ using Duality;
 using Duality.Cloning;
 using Duality.Editor;
 
-using SnowyPeak.Duality.Data.Properties;
+using SnowyPeak.Duality.Plugins.Data.Properties;
 
 
-namespace SnowyPeak.Duality.Data.Resources
+namespace SnowyPeak.Duality.Plugins.Data.Resources
 {
     /// <summary>
     /// Allows Row/Column based access to a valid CSV file

@@ -5,9 +5,9 @@ using System.Text;
 
 using Duality;
 using Duality.Editor;
-using SnowyPeak.Duality.Data.Properties;
+using SnowyPeak.Duality.Plugins.Data.Properties;
 
-namespace SnowyPeak.Duality.Data.Resources
+namespace SnowyPeak.Duality.Plugins.Data.Resources
 {
     /// <summary>
     /// Allow line-based access to the contents of a text (.txt) file.
