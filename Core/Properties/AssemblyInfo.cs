@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 // Le informazioni generali relative a un assembly sono controllate dal seguente
 // set di attributi. Per modificare le informazioni associate a un assembly
 // occorre quindi modificare i valori di questi attributi.
-[assembly: AssemblyTitle("SnowyPeak.Duality.Data")]
+[assembly: AssemblyTitle("SnowyPeak.Duality.Plugin.Data")]
 [assembly: AssemblyProduct("Duality Data Resources core plugin")]
 
 // Se si imposta ComVisible su false, i tipi in questo assembly non saranno visibili

@@ -7,9 +7,9 @@ using System.Xml;
 using Duality;
 using Duality.Editor;
 
-using SnowyPeak.Duality.Plugins.Data.Properties;
+using SnowyPeak.Duality.Plugin.Data.Properties;
 
-namespace SnowyPeak.Duality.Plugins.Data.Resources
+namespace SnowyPeak.Duality.Plugin.Data.Resources
 {
     /// <summary>
     /// Represents an arbitrary piece of XML-formatted data.
@@ -45,7 +45,7 @@ namespace SnowyPeak.Duality.Plugins.Data.Resources
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override string GetDefaultExtension()
@@ -54,7 +54,7 @@ namespace SnowyPeak.Duality.Plugins.Data.Resources
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected override void AfterReload()
         {

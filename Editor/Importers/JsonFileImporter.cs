@@ -9,43 +9,37 @@ using SnowyPeak.Duality.Plugin.Data.Resources;
 
 namespace SnowyPeak.Duality.Editor.Plugin.Data
 {
-    public class XmlFileImporter : IFileImporter
+    public class JsonFileImporter : IFileImporter
     {
         public bool CanImportFile(string srcFile)
         {
             string ext = Path.GetExtension(srcFile).ToLower();
-            return ext == ".xml" || ext == ".xsd";
+            return ext == ".json";
         }
 
         public string[] GetOutputFiles(string srcFile, string targetName, string targetDir)
         {
-            string ext = Path.GetExtension(srcFile).ToLower();
-            string targetResPath;
-            if (ext == ".xml")
-                targetResPath = PathHelper.GetFreePath(Path.Combine(targetDir, targetName), XmlData.FileExt);
-            else
-                targetResPath = PathHelper.GetFreePath(Path.Combine(targetDir, targetName), XmlSchema.FileExt);
+            string targetResPath = PathHelper.GetFreePath(Path.Combine(targetDir, targetName), JsonData.FileExt);
             return new string[] { targetResPath };
         }
 
         public void ImportFile(string srcFile, string targetName, string targetDir)
         {
-            string ext = Path.GetExtension(srcFile).ToLower();
             string[] output = this.GetOutputFiles(srcFile, targetName, targetDir);
 
-            TextFile res = (ext == ".xml") ? new XmlData() as TextFile : new XmlSchema() as TextFile;
+            JsonData res = new JsonData();
             res.LoadFile(srcFile);
             res.Save(output[0]);
         }
 
         public bool IsUsingSrcFile(ContentRef<Resource> r, string srcFile)
         {
-            return r.As<TextFile>() != null && r.Res.SourcePath == srcFile;
+            return r.As<JsonData>() != null && r.Res.SourcePath == srcFile;
         }
 
         public void ReimportFile(ContentRef<Resource> r, string srcFile)
         {
-            TextFile f = r.Res as TextFile;
+            JsonData f = r.Res as JsonData;
 
             if (f != null)
                 f.LoadFile(srcFile);

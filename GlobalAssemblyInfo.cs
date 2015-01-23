@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Resources;
 
 /*
@@ -11,7 +10,6 @@ using System.Resources;
 [assembly: AssemblyCopyright("Copyright © Alessandro Pilati 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-
 /*
  * Version information for an assembly consists of the following four values:
  *
@@ -24,5 +22,5 @@ using System.Resources;
  *  by using the '*' as shown below:
  *  [assembly: AssemblyVersion("1.0.*")]
  */
-[assembly: AssemblyVersion("1.0.1")]
+[assembly: AssemblyVersion("1.0.2")]
 [assembly: NeutralResourcesLanguageAttribute("en-US", UltimateResourceFallbackLocation.MainAssembly)]

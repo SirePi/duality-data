@@ -8,15 +8,15 @@ using Duality;
 using Duality.Cloning;
 using Duality.Editor;
 
-using SnowyPeak.Duality.Plugins.Data.Properties;
+using SnowyPeak.Duality.Plugin.Data.Properties;
 
-namespace SnowyPeak.Duality.Plugins.Data.Resources
+namespace SnowyPeak.Duality.Plugin.Data.Resources
 {
     /// <summary>
     /// Represents a validated XmlDocument which consists of an XmlFile and an optional XmlSchema
     /// </summary>
-    /// <seealso cref="SnowyPeak.Duality.Plugins.Data.Resources.XmlData"/>
-    /// <seealso cref="SnowyPeak.Duality.Plugins.Data.Resources.XmlSchema"/>
+    /// <seealso cref="SnowyPeak.Duality.Plugin.Data.Resources.XmlData"/>
+    /// <seealso cref="SnowyPeak.Duality.Plugin.Data.Resources.XmlSchema"/>
     [Serializable]
     [EditorHintCategory(typeof(Res), ResNames.CategoryData)]
     [EditorHintImage(typeof(Res), ResNames.ImageXdata)]
@@ -76,7 +76,7 @@ namespace SnowyPeak.Duality.Plugins.Data.Resources
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override string GetDefaultExtension()
@@ -127,7 +127,7 @@ namespace SnowyPeak.Duality.Plugins.Data.Resources
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected override void AfterReload()
         {
@@ -136,7 +136,7 @@ namespace SnowyPeak.Duality.Plugins.Data.Resources
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="target"></param>
         /// <param name="operation"></param>

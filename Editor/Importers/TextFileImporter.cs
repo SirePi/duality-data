@@ -5,9 +5,9 @@ using System.IO;
 using Duality;
 using Duality.Editor;
 
-using SnowyPeak.Duality.Plugins.Data.Resources;
+using SnowyPeak.Duality.Plugin.Data.Resources;
 
-namespace SnowyPeak.Duality.Editor.Plugins.Data
+namespace SnowyPeak.Duality.Editor.Plugin.Data
 {
     public class PlainTextFileImporter : IFileImporter
     {

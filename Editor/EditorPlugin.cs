@@ -8,15 +8,15 @@ using Duality;
 using Duality.Editor;
 using Duality.Editor.Forms;
 
-using SnowyPeak.Duality.Plugins.Data.Resources;
+using SnowyPeak.Duality.Plugin.Data.Resources;
 
-namespace SnowyPeak.Duality.Editor.Plugins.Data
+namespace SnowyPeak.Duality.Editor.Plugin.Data
 {
     public class DualityDataEditorPlugin : EditorPlugin
     {
         public override string Id
         {
-            get { return "SnowyPeak.Duality.Data"; }
+            get { return "SnowyPeak.Duality.Plugin.Data"; }
         }
 
         protected override void InitPlugin(MainForm main)

@@ -8,10 +8,9 @@ using Duality;
 using Duality.Cloning;
 using Duality.Editor;
 
-using SnowyPeak.Duality.Plugins.Data.Properties;
+using SnowyPeak.Duality.Plugin.Data.Properties;
 
-
-namespace SnowyPeak.Duality.Plugins.Data.Resources
+namespace SnowyPeak.Duality.Plugin.Data.Resources
 {
     /// <summary>
     /// Allows Row/Column based access to a valid CSV file
@@ -175,6 +174,7 @@ namespace SnowyPeak.Duality.Plugins.Data.Resources
         {
             return _dataMatrix.Where((s, i) => (i % _columns) == column);
         }
+
         /// <summary>
         /// Get a single column of data, accessed by field.
         /// </summary>
@@ -184,14 +184,16 @@ namespace SnowyPeak.Duality.Plugins.Data.Resources
         {
             return GetColumn(GetColumnWithName(field));
         }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override string GetDefaultExtension()
         {
             return ".csv";
         }
+
         /// <summary>
         /// Access the data by row and column and returns it converted to the desired type.
         /// </summary>
@@ -203,6 +205,7 @@ namespace SnowyPeak.Duality.Plugins.Data.Resources
         {
             return (T)Convert.ChangeType(this[row, column], typeof(T));
         }
+
         /// <summary>
         /// Access the data by index and column and returns it converted to the desired type.
         /// </summary>
@@ -214,6 +217,7 @@ namespace SnowyPeak.Duality.Plugins.Data.Resources
         {
             return GetItemAs<T>(GetRowWithIndex(index), column);
         }
+
         /// <summary>
         /// Access the data by row and field and returns it converted to the desired type.
         /// </summary>
@@ -225,6 +229,7 @@ namespace SnowyPeak.Duality.Plugins.Data.Resources
         {
             return GetItemAs<T>(row, GetColumnWithName(field));
         }
+
         /// <summary>
         /// Access the data by index and field and returns it converted to the desired type.
         /// </summary>
@@ -236,6 +241,7 @@ namespace SnowyPeak.Duality.Plugins.Data.Resources
         {
             return GetItemAs<T>(GetRowWithIndex(index), GetColumnWithName(field));
         }
+
         /// <summary>
         /// Get a single row of data, accessed by row.
         /// </summary>
@@ -245,6 +251,7 @@ namespace SnowyPeak.Duality.Plugins.Data.Resources
         {
             return _dataMatrix.Skip(row * _columns).Take(_columns);
         }
+
         /// <summary>
         /// Get a single row of data, accessed by index.
         /// </summary>
@@ -254,13 +261,27 @@ namespace SnowyPeak.Duality.Plugins.Data.Resources
         {
             return GetRow(GetRowWithIndex(index));
         }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected override void AfterReload()
         {
             base.AfterReload();
             Parse();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="operation"></param>
+        protected override void OnCopyDataTo(object target, ICloneOperation operation)
+        {
+            base.OnCopyDataTo(target, operation);
+            CsvData targetCsv = target as CsvData;
+
+            targetCsv.Parse();
         }
 
         private IEnumerable<string> GetColumn(int? column)
@@ -381,19 +402,6 @@ namespace SnowyPeak.Duality.Plugins.Data.Resources
                 _rows = 0;
                 _columns = 0;
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="operation"></param>
-        protected override void OnCopyDataTo(object target, ICloneOperation operation)
-        {
-            base.OnCopyDataTo(target, operation);
-            CsvData targetCsv = target as CsvData;
-
-            targetCsv.Parse();
         }
     }
 }

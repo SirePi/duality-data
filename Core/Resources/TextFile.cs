@@ -5,7 +5,7 @@ using System.Text;
 
 using Duality;
 
-namespace SnowyPeak.Duality.Plugins.Data.Resources
+namespace SnowyPeak.Duality.Plugin.Data.Resources
 {
     /// <summary>
     /// Abstract class allowing access to the contents arbitary text-based file.
