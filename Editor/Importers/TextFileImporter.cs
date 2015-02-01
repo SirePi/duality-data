@@ -17,6 +17,17 @@ namespace SnowyPeak.Duality.Editor.Plugin.Data
             return ext == ".txt";
         }
 
+        public bool CanReImportFile(ContentRef<Resource> r, string srcFile)
+        {
+            return r.Is<PlainTextData>();
+        }
+
+        public void ReImportFile(ContentRef<Resource> r, string srcFile)
+        {
+            PlainTextData f = r.Res as PlainTextData;
+            f.LoadFile(srcFile);
+        }
+
         public string[] GetOutputFiles(string srcFile, string targetName, string targetDir)
         {
             string targetResPath = PathHelper.GetFreePath(Path.Combine(targetDir, targetName), TextFile.FileExt);

@@ -28,6 +28,22 @@ namespace SnowyPeak.Duality.Editor.Plugin.Data
             return new string[] { targetResPath };
         }
 
+        public bool CanReImportFile(ContentRef<Resource> r, string srcFile)
+        {
+            return r.Is<XmlData>() || r.Is<XmlSchema>();
+        }
+
+        public void ReImportFile(ContentRef<Resource> r, string srcFile)
+        {
+            TextFile f = r.Res as XmlData;
+            if (f == null)
+            {
+                f = r.Res as XmlSchema;
+            }
+
+            f.LoadFile(srcFile);
+        }
+
         public void ImportFile(string srcFile, string targetName, string targetDir)
         {
             string ext = Path.GetExtension(srcFile).ToLower();

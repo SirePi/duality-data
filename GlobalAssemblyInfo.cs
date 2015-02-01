@@ -22,5 +22,5 @@ using System.Resources;
  *  by using the '*' as shown below:
  *  [assembly: AssemblyVersion("1.0.*")]
  */
-[assembly: AssemblyVersion("1.1.1")]
+[assembly: AssemblyVersion("1.2.0")]
 [assembly: NeutralResourcesLanguageAttribute("en-US", UltimateResourceFallbackLocation.MainAssembly)]

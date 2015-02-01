@@ -17,6 +17,17 @@ namespace SnowyPeak.Duality.Editor.Plugin.Data
             return ext == ".csv";
         }
 
+        public bool CanReImportFile(ContentRef<Resource> r, string srcFile)
+        {
+            return r.Is<CsvData>();
+        }
+
+        public void ReImportFile(ContentRef<Resource> r, string srcFile)
+        {
+            CsvData f = r.Res as CsvData;
+            f.LoadFile(srcFile);
+        }
+
         public string[] GetOutputFiles(string srcFile, string targetName, string targetDir)
         {
             string targetResPath = PathHelper.GetFreePath(Path.Combine(targetDir, targetName), CsvData.FileExt);
