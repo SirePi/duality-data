@@ -10,7 +10,6 @@ using System.Text;
 
 namespace SnowyPeak.Duality.Plugin.Data
 {
-    [Serializable]
     public class DynamicJsonObject : DynamicObject
     {
         private IDictionary<string, object> _dictionary { get; set; }
@@ -38,6 +37,34 @@ namespace SnowyPeak.Duality.Plugin.Data
             }
 
             return _dictionary.ContainsKey(binder.Name);
+        }
+
+        public override IEnumerable<string> GetDynamicMemberNames()
+        {
+            return _dictionary.Keys;
+        }
+
+        public object this[string key]
+        {
+            get
+            {
+                object result = _dictionary[key];
+
+                if (result is IDictionary<string, object>)
+                {
+                    result = new DynamicJsonObject(result as IDictionary<string, object>);
+                }
+                else if (result is ArrayList && (result as ArrayList) is IDictionary<string, object>)
+                {
+                    result = new List<DynamicJsonObject>((result as ArrayList).ToArray().Select(x => new DynamicJsonObject(x as IDictionary<string, object>)));
+                }
+                else if (result is ArrayList)
+                {
+                    result = new List<object>((result as ArrayList).ToArray());
+                }
+
+                return result;
+            }
         }
     }
 }

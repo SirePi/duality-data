@@ -3,12 +3,18 @@
 using System;
 using System.Linq;
 using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Linq;
 
 using Duality;
 using Duality.Cloning;
 using Duality.Editor;
 
+using System.Xml.Serialization;
+
 using SnowyPeak.Duality.Plugin.Data.Properties;
+using System.IO;
+using System.Text;
 
 namespace SnowyPeak.Duality.Plugin.Data.Resources
 {
@@ -17,25 +23,19 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
     /// </summary>
     /// <seealso cref="SnowyPeak.Duality.Plugin.Data.Resources.XmlData"/>
     /// <seealso cref="SnowyPeak.Duality.Plugin.Data.Resources.XmlSchema"/>
-    [Serializable]
-    [EditorHintCategory(typeof(Res), ResNames.CategoryData)]
-    [EditorHintImage(typeof(Res), ResNames.ImageXdata)]
+    [EditorHintCategory(ResNames.CategoryData)]
+    [EditorHintImage(ResNames.ImageXdata)]
     public class XmlData : TextFile
     {
-        /// <summary>
-        /// A XmlData resources file extension.
-        /// </summary>
-        public new static string FileExt = ".XmlData" + Resource.FileExt;
-
         private bool _isValid;
 
-        [NonSerialized]
-        private System.Xml.Schema.ValidationEventHandler _validationFailed;
+        //[DontSerialize]
+        //private System.Xml.Schema.ValidationEventHandler _validationFailed;
 
-        [NonSerialized]
-        private XmlDocument _xDocument;
+        [DontSerialize]
+        private XDocument _xDocument;
 
-        [NonSerialized]
+        [DontSerialize]
         private XmlReader _xSchemaReader;
 
         private ContentRef<XmlSchema> _xsd;
@@ -45,8 +45,7 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
         /// </summary>
         public XmlData()
         {
-            _xDocument = new XmlDocument();
-            _validationFailed = new System.Xml.Schema.ValidationEventHandler(ValidationFailed);
+            //_validationFailed = new System.Xml.Schema.ValidationEventHandler(ValidationFailed);
         }
 
         /// <summary>
@@ -70,7 +69,7 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
         /// The content of the file, as an XmlDocument object
         /// </summary>
         [EditorHintFlags(MemberFlags.Invisible)]
-        public XmlDocument XmlDocument
+        public XDocument XmlDocument
         {
             get { return _xDocument; }
         }
@@ -89,10 +88,11 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
         /// </summary>
         public void Validate()
         {
-            _isValid = !String.IsNullOrWhiteSpace(_content);
-
+            _isValid = !String.IsNullOrWhiteSpace(RawContent);
+            
             if (_isValid)
             {
+                /*
                 if (_xDocument.Schemas.Count > 0)
                 {
                     System.Xml.Schema.XmlSchema[] oldSchemas = new System.Xml.Schema.XmlSchema[_xDocument.Schemas.Count];
@@ -103,17 +103,17 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
                         _xDocument.Schemas.Remove(schema);
                     }
                 }
-
+                 * */
                 try
                 {
-                    _xDocument.LoadXml(_content);
+                    _xDocument = XDocument.Parse(RawContent);
                 }
                 catch (Exception ex)
                 {
                     _isValid = false;
                     Log.Editor.WriteError(ex.Message);
                 }
-
+                /*
                 if (_isValid && !_xsd.IsExplicitNull)
                 {
                     using (System.IO.StringReader sr = new System.IO.StringReader(_xsd.Res.Content))
@@ -122,16 +122,16 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
                         _xDocument.Schemas.Add(_xsd.Res.ValidatingNamespace, _xSchemaReader);
                         _xDocument.Validate(_validationFailed);
                     }
-                }
+                }*/
             }
         }
 
         /// <summary>
         ///
         /// </summary>
-        protected override void AfterReload()
+        protected override void AfterLoad()
         {
-            base.AfterReload();
+            base.AfterLoad();
             Validate();
         }
 
@@ -147,7 +147,7 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
 
             targetXml.Validate();
         }
-
+        /*
         private void ValidationFailed(object sender, System.Xml.Schema.ValidationEventArgs e)
         {
             if (e.Severity == System.Xml.Schema.XmlSeverityType.Error)
@@ -156,6 +156,6 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
                 Log.Editor.WriteWarning(e.Message);
 
             _isValid = false;
-        }
+        }*/
     }
 }

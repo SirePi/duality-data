@@ -15,16 +15,10 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
     /// <summary>
     /// Allows Row/Column based access to a valid CSV file
     /// </summary>
-    [Serializable]
-    [EditorHintCategory(typeof(Res), ResNames.CategoryData)]
-    [EditorHintImage(typeof(Res), ResNames.ImageCsv)]
+    [EditorHintCategory(ResNames.CategoryData)]
+    [EditorHintImage(ResNames.ImageCsv)]
     public class CsvData : TextFile
     {
-        /// <summary>
-        /// A CsvFile Resource file extension.
-        /// </summary>
-        public new static string FileExt = ".CsvData" + Resource.FileExt;
-
         private static string[] EmptyData = new string[0];
 
         private Dictionary<string, int> _colNames;
@@ -265,9 +259,9 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
         /// <summary>
         ///
         /// </summary>
-        protected override void AfterReload()
+        protected override void AfterLoad()
         {
-            base.AfterReload();
+            base.AfterLoad();
             Parse();
         }
 
@@ -350,7 +344,7 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
             _dataMatrix = EmptyData;
 
             int row = 0;
-            string[] lines = _content.Split(TextFile.NewLineSplitter, StringSplitOptions.RemoveEmptyEntries);
+            string[] lines = RawContent.Split(TextFile.NewLineSplitter, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (string line in lines)
             {

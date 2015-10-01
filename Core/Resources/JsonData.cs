@@ -3,27 +3,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Script.Serialization;
 using Duality;
 using Duality.Cloning;
 using Duality.Editor;
 using SnowyPeak.Duality.Plugin.Data.Properties;
+using Newtonsoft.Json.Linq;
 
 namespace SnowyPeak.Duality.Plugin.Data.Resources
 {
     /// <summary>
     /// Allows Row/Column based access to a valid Json file
     /// </summary>
-    [Serializable]
-    [EditorHintCategory(typeof(Res), ResNames.CategoryData)]
-    [EditorHintImage(typeof(Res), ResNames.ImageJson)]
+    [EditorHintCategory(ResNames.CategoryData)]
+    [EditorHintImage(ResNames.ImageJson)]
     public class JsonData : TextFile
     {
-        /// <summary>
-        /// A JsonData Resource file extension.
-        /// </summary>
-        public new static string FileExt = ".JsonData" + Resource.FileExt;
-
         private bool _isValid;
         private dynamic _jsonObject;
 
@@ -59,9 +53,9 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
         /// <summary>
         ///
         /// </summary>
-        protected override void AfterReload()
+        protected override void AfterLoad()
         {
-            base.AfterReload();
+            base.AfterLoad();
             Parse();
         }
 
@@ -82,13 +76,10 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
         {
             _isValid = true;
 
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            jss.RegisterConverters(new JavaScriptConverter[] { new DynamicJsonConverter() });
-
             _jsonObject = null;
             try 
-            { 
-                _jsonObject = jss.Deserialize<object>(_content) as dynamic; 
+            {
+                _jsonObject = JObject.Parse(RawContent); 
             }
             catch(Exception ex)
             {

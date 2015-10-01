@@ -11,15 +11,17 @@ namespace SnowyPeak.Duality.Plugin.Data.Properties
 
     public static class ResNames
     {
-        public const string CategoryData = "Category_Data";
-        public const string CategoryFile = "Category_File";
+        private const string ManifestBaseName = "SnowyPeak.Duality.Plugin.Data.";
 
-        public const string ImageCsv = "iconResCsv";
-        public const string ImageJson = "iconResJson";
-        public const string ImageText = "iconResText";
-        public const string ImageXdata = "iconResXmlData";
-        public const string ImageXml = "iconResXml";
-        public const string ImageXsd = "iconResXsd";
+        public const string CategoryData = "Data";
+        public const string CategoryFile = "File";
+
+        public const string ImageCsv = ManifestBaseName + "iconResCsv.png";
+        public const string ImageJson = ManifestBaseName + "iconResJson.png";
+        public const string ImageText = ManifestBaseName + "iconResText.png";
+        public const string ImageXdata = ManifestBaseName + "iconResXmlData.png";
+        public const string ImageXml = ManifestBaseName + "iconResXml.png";
+        public const string ImageXsd = ManifestBaseName + "iconResXsd.png";
     }
 
 #pragma warning restore 1591

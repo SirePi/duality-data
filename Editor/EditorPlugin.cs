@@ -1,79 +1,144 @@
-﻿// This code is provided under the MIT license. Originally by Alessandro Pilati.
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
+using System.IO;
+
+using WeifenLuo.WinFormsUI.Docking;
+
+using AdamsLair.WinForms.ItemModels;
 
 using Duality;
+using Duality.Components;
+using Duality.Components.Renderers;
+using Duality.Components.Diagnostics;
+using Duality.Components.Physics;
+using Duality.Resources;
+using Duality.Properties;
+using TextRenderer = Duality.Components.Renderers.TextRenderer;
+
 using Duality.Editor;
 using Duality.Editor.Forms;
-
-using SnowyPeak.Duality.Plugin.Data.Resources;
+using Duality.Editor.Properties;
+using Duality.Editor.UndoRedoActions;
 
 namespace SnowyPeak.Duality.Editor.Plugin.Data
 {
-    public class DualityDataEditorPlugin : EditorPlugin
-    {
-        public override string Id
-        {
-            get { return "SnowyPeak.Duality.Plugin.Data"; }
-        }
+	public class EditorBasePlugin : EditorPlugin
+	{
+		public override string Id
+		{
+			get { return "EditorBase"; }
+		}
 
-        protected override void InitPlugin(MainForm main)
-        {
-            base.InitPlugin(main);
 
-            FileEventManager.ResourceModified += this.FileEventManager_ResourceChanged;
-            DualityEditorApp.ObjectPropertyChanged += this.DualityEditorApp_ObjectPropertyChanged;
+		protected override void InitPlugin(MainForm main)
+		{
+			base.InitPlugin(main);
 
-            //Revalidating all XmlData
-            foreach (ContentRef<XmlData> xd in ContentProvider.GetLoadedContent<XmlData>())
-            {
-                xd.Res.Validate();
-            }
-        }
+			FileEventManager.ResourceModified += this.FileEventManager_ResourceChanged;
+			DualityEditorApp.ObjectPropertyChanged += this.DualityEditorApp_ObjectPropertyChanged;
+		}
+		
 
-        private void DualityEditorApp_ObjectPropertyChanged(object sender, ObjectPropertyChangedEventArgs e)
-        {
-            if (e.Objects.ResourceCount > 0)
-            {
-                foreach (var r in e.Objects.Resources)
-                    this.OnResourceModified(r);
-            }
-        }
+		private void FileEventManager_ResourceChanged(object sender, ResourceEventArgs e)
+		{
+			if (e.IsResource) this.OnResourceModified(e.Content);
+		}
 
-        private void FileEventManager_ResourceChanged(object sender, ResourceEventArgs e)
-        {
-            if (e.IsResource) this.OnResourceModified(e.Content);
-        }
+		private void DualityEditorApp_ObjectPropertyChanged(object sender, ObjectPropertyChangedEventArgs e)
+		{
+			if (e.Objects.ResourceCount > 0)
+			{
+				foreach (var r in e.Objects.Resources)
+					this.OnResourceModified(r);
+			}
+		}
 
-        private void OnResourceModified(ContentRef<Resource> resRef)
-        {
-            List<object> changedObj = null;
+		private void OnResourceModified(ContentRef<Resource> resRef)
+		{
+			List<object> changedObj = null;
 
-            if (resRef.Is<XmlData>() || resRef.Is<XmlSchema>())
-            {
-                ContentRef<XmlData> fileRef = resRef.As<XmlData>();
-                ContentRef<XmlSchema> schemaRef = resRef.As<XmlSchema>();
+			// If a font has been modified, reload it and update all TextRenderers
+            /*
+			if (resRef.Is<Font>())
+			{
+				if (resRef.IsLoaded)
+				{
+					Font fnt = resRef.As<Font>().Res;
+					if (fnt.GlyphsDirty)
+						fnt.RenderGlyphs();
+				}
 
-                foreach (ContentRef<XmlData> xd in ContentProvider.GetLoadedContent<XmlData>())
-                {
-                    if (!xd.IsAvailable) continue;
+				foreach (Duality.Components.Renderers.TextRenderer r in Scene.Current.AllObjects.GetComponents<Duality.Components.Renderers.TextRenderer>())
+				{
+					r.Text.ApplySource();
 
-                    // Issue #2. Missing check on Schema.IsExplicitNull would cause an endless loop 
-                    if (!xd.Res.Schema.IsExplicitNull && xd.Res.Schema == schemaRef)
-                    {
-                        xd.Res.Validate();
+					if (changedObj == null) changedObj = new List<object>();
+					changedObj.Add(r);
+				}
+			}
+			// If its a Pixmap, reload all associated Textures
+			else if (resRef.Is<Pixmap>())
+			{
+				ContentRef<Pixmap> pixRef = resRef.As<Pixmap>();
+				foreach (ContentRef<Texture> tex in ContentProvider.GetLoadedContent<Texture>())
+				{
+					if (!tex.IsAvailable) continue;
+					if (tex.Res.BasePixmap == pixRef)
+					{
+						tex.Res.ReloadData();
 
-                        if (changedObj == null) changedObj = new List<object>();
-                        changedObj.Add(xd.Res);
-                    }
-                }
-            }
+						if (changedObj == null) changedObj = new List<object>();
+						changedObj.Add(tex.Res);
+					}
+				}
+			}
+			// If its a Texture, update all associated RenderTargets
+			else if (resRef.Is<Texture>())
+			{
+				if (resRef.IsLoaded)
+				{
+					Texture tex = resRef.As<Texture>().Res;
+					if (tex.NeedsReload)
+						tex.ReloadData();
+				}
 
-            // Notify a change that isn't critical regarding persistence (don't flag stuff unsaved)
-            if (changedObj != null)
-                DualityEditorApp.NotifyObjPropChanged(this, new ObjectSelection(changedObj as IEnumerable<object>), false);
-        }
-    }
+				ContentRef<Texture> texRef = resRef.As<Texture>();
+				foreach (ContentRef<RenderTarget> rt in ContentProvider.GetLoadedContent<RenderTarget>())
+				{
+					if (!rt.IsAvailable) continue;
+					if (rt.Res.Targets.Contains(texRef))
+					{
+						rt.Res.SetupTarget();
+
+						if (changedObj == null) changedObj = new List<object>();
+						changedObj.Add(rt.Res);
+					}
+				}
+			}
+			// If its some kind of shader, update all associated ShaderPrograms
+			else if (resRef.Is<AbstractShader>())
+			{
+				ContentRef<FragmentShader> fragRef = resRef.As<FragmentShader>();
+				ContentRef<VertexShader> vertRef = resRef.As<VertexShader>();
+				foreach (ContentRef<ShaderProgram> sp in ContentProvider.GetLoadedContent<ShaderProgram>())
+				{
+					if (!sp.IsAvailable) continue;
+					if (sp.Res.Fragment == fragRef || sp.Res.Vertex == vertRef)
+					{
+						if (sp.Res.Compiled) sp.Res.Compile(true);
+
+						if (changedObj == null) changedObj = new List<object>();
+						changedObj.Add(sp.Res);
+					}
+				}
+			}
+            */
+
+			// Notify a change that isn't critical regarding persistence (don't flag stuff unsaved)
+			if (changedObj != null)
+				DualityEditorApp.NotifyObjPropChanged(this, new ObjectSelection(changedObj as IEnumerable<object>), false);
+		}
+	}
 }

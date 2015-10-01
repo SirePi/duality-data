@@ -8,22 +8,17 @@ using Duality;
 using Duality.Editor;
 
 using SnowyPeak.Duality.Plugin.Data.Properties;
+using System.Xml.Linq;
 
 namespace SnowyPeak.Duality.Plugin.Data.Resources
 {
     /// <summary>
     /// Represents an arbitrary piece of XML-formatted data.
     /// </summary>
-    [Serializable]
-    [EditorHintCategory(typeof(Res), ResNames.CategoryData)]
-    [EditorHintImage(typeof(Res), ResNames.ImageXsd)]
+    [EditorHintCategory(ResNames.CategoryData)]
+    [EditorHintImage(ResNames.ImageXsd)]
     public class XmlSchema : TextFile
     {
-        /// <summary>
-        /// A XmlSchema resources file extension.
-        /// </summary>
-        public new static string FileExt = ".XmlSchema" + Resource.FileExt;
-
         private string _validatingNamespace;
 
         /// <summary>
@@ -39,10 +34,6 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
         {
             get { return _validatingNamespace; }
         }
-        internal string Content
-        {
-            get { return _content; }
-        }
 
         /// <summary>
         ///
@@ -56,14 +47,13 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
         /// <summary>
         ///
         /// </summary>
-        protected override void AfterReload()
+        protected override void AfterLoad()
         {
-            base.AfterReload();
+            base.AfterLoad();
 
-            XmlDocument xDoc = new XmlDocument();
-            xDoc.LoadXml(_content);
+            //XDocument xDoc = XDocument.Parse(_content);
 
-            _validatingNamespace = xDoc.FirstChild.NextSibling.Attributes["targetNamespace"].Value;
+            //_validatingNamespace = xDoc.Root.X.NextSibling.Attributes["targetNamespace"].Value;
         }
     }
 }

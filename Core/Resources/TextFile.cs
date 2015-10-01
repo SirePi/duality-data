@@ -4,13 +4,15 @@ using System;
 using System.Text;
 
 using Duality;
+using Duality.IO;
+using System.IO;
+using Duality.Editor;
 
 namespace SnowyPeak.Duality.Plugin.Data.Resources
 {
     /// <summary>
     /// Abstract class allowing access to the contents arbitary text-based file.
     /// </summary>
-    [Serializable]
     public abstract class TextFile : Resource
     {
         /// <summary>
@@ -21,10 +23,19 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
         /// <summary>
         ///
         /// </summary>
-        protected string _content;
+        private string _content;
 
         private int _bytes;
         private Encoding _encoding;
+
+        /// <summary>
+        /// [GET] The contents of the imported file.
+        /// </summary>
+        [EditorHintFlags(MemberFlags.Invisible)]
+        public string RawContent
+        {
+            get { return _content; }
+        }
 
         /// <summary>
         /// Constructor
@@ -43,9 +54,9 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
         /// <summary>
         /// [GET] The encoding of the source file
         /// </summary>
-        public string Encoding
+        public Encoding Encoding
         {
-            get { return _encoding == null ? "[NULL]" : _encoding.EncodingName; }
+            get { return _encoding; }
         }
 
         /// <summary>
@@ -56,9 +67,12 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
         {
             if (filePath != null)
             {
-                if (!System.IO.File.Exists(filePath))
+                if (!FileOp.Exists(filePath))
                 {
-                    System.IO.File.WriteAllText(filePath, String.Empty);
+                    using (Stream s = FileOp.Open(filePath, FileAccessMode.Write)) 
+                    { 
+                        // nothing to do, just create an empty file
+                    }
                 }
             }
         }
@@ -73,47 +87,32 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
         /// Sets the SourcePath variable and calls the Reload method.
         /// </summary>
         /// <param name="filePath">The path of the file to be loaded</param>
-        public void LoadFile(string filePath)
+        public void SetData(string content, int length, Encoding encoding)
         {
-            SourcePath = filePath;
-            Reload();
+            _content = content;
+            _bytes = length;
+            _encoding = encoding;
+
+            AfterLoad();
         }
 
-        /// <summary>
-        /// Reloads the file and calls the abstract AfterReload method
-        /// </summary>
-        public void Reload()
+        /*
+        public void SaveFile(string filePath)
         {
-            if (!String.IsNullOrWhiteSpace(SourcePath))
+            if (!String.IsNullOrWhiteSpace(filePath))
             {
-                using (System.IO.StreamReader sr = new System.IO.StreamReader(SourcePath))
+                using (System.IO.Stream s = FileOp.Open(filePath, FileAccessMode.Write))
+                using (System.IO.StreamWriter sw = new StreamWriter(s, _encoding))
                 {
-                    _encoding = sr.CurrentEncoding;
-
-                    string line = String.Empty;
-                    StringBuilder sb = new StringBuilder();
-
-                    do
-                    {
-                        line = sr.ReadLine();
-                        if (line != null)
-                        {
-                            sb.AppendLine(line);
-                        }
-                    } while (line != null);
-
-                    _content = sb.ToString();
-                    _bytes = sb.Length;
+                    sw.Write(_content);
                 }
-
-                AfterReload();
             }
         }
-
+        */
         /// <summary>
         /// Overridden will perform custom logic after the file has been reloaded.
         /// </summary>
-        protected virtual void AfterReload()
+        protected virtual void AfterLoad()
         { }
     }
 }
