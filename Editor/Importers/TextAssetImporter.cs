@@ -50,7 +50,7 @@ namespace SnowyPeak.Duality.Editor.Plugin.Data.Importers
         public void PrepareExport(IAssetExportEnvironment env)
         {
             // We can export any Resource that is a Pixmap
-            if (env.Input is JsonData)
+            if (env.Input is PlainTextData)
             {
                 // Add the file path of the exported output we'll produce.
                 env.AddOutputPath(env.Input.Name + SourceFileExtPrimary);
@@ -59,7 +59,7 @@ namespace SnowyPeak.Duality.Editor.Plugin.Data.Importers
         public void Export(IAssetExportEnvironment env)
         {
             // Determine input and output path
-            JsonData input = env.Input as JsonData;
+			PlainTextData input = env.Input as PlainTextData;
             string outputPath = env.AddOutputPath(input.Name + SourceFileExtPrimary);
 
             // Take the input Resource's pixel data and save it at the specified location

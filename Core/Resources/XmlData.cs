@@ -35,10 +35,10 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
         [DontSerialize]
         private XDocument _xDocument;
 
-        [DontSerialize]
-        private XmlReader _xSchemaReader;
+        //[DontSerialize]
+        //private XmlReader _xSchemaReader;
 
-        private ContentRef<XmlSchema> _xsd;
+        //private ContentRef<XmlSchema> _xsd;
 
         /// <summary>
         /// Constructor
@@ -58,13 +58,14 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
         /// <summary>
         /// [GET / SET] The XmlSchema against which the file should be validated.
         /// </summary>
+		/*
         [EditorHintFlags(MemberFlags.AffectsOthers)]
         public ContentRef<XmlSchema> Schema
         {
             get { return _xsd; }
             set { _xsd = value; Validate(); }
         }
-
+		*/
         /// <summary>
         /// The content of the file, as an XmlDocument object
         /// </summary>

@@ -25,7 +25,7 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
         { }
 
         /// <summary>
-        /// [GET] The number of lines in the imported file.
+        /// [GET] The lines in the imported file.
         /// </summary>
         [EditorHintFlags(MemberFlags.Invisible)]
         public string[] Lines

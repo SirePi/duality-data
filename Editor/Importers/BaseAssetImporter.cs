@@ -22,24 +22,11 @@ namespace SnowyPeak.Duality.Editor.Plugin.Data.Importers
                 {
                     T target = targetRef.Res;
 
-                    // Update pixel data from the input file
                     if (!String.IsNullOrWhiteSpace(input.Path))
                     {
                         using (System.IO.StreamReader sr = new StreamReader(input.Path))
                         {
-                            string line = String.Empty;
-                            StringBuilder sb = new StringBuilder();
-
-                            do
-                            {
-                                line = sr.ReadLine();
-                                if (line != null)
-                                {
-                                    sb.AppendLine(line);
-                                }
-                            } while (line != null);
-
-                            string content = sb.ToString();
+							string content = sr.ReadToEnd();
                             target.SetData(content, sr.CurrentEncoding.GetByteCount(content), sr.CurrentEncoding);
                         }
                     }
@@ -53,7 +40,9 @@ namespace SnowyPeak.Duality.Editor.Plugin.Data.Importers
         {
             if (!String.IsNullOrWhiteSpace(outputPath))
             {
-                using (System.IO.StreamWriter sw = new StreamWriter(outputPath, false, input.Encoding))
+				Encoding encoding = input.Encoding == null ? Encoding.UTF8 : input.Encoding;
+				
+                using (System.IO.StreamWriter sw = new StreamWriter(outputPath, false, encoding))
                 {
                     sw.Write(input.RawContent);
                 }

@@ -11,7 +11,7 @@ namespace SnowyPeak.Duality.Plugin.Data.Properties
 
     public static class ResNames
     {
-        private const string ManifestBaseName = "SnowyPeak.Duality.Plugin.Data.";
+		private const string ManifestBaseName = "SnowyPeak.Duality.Plugin.Data.EmbeddedResources.";
 
         public const string CategoryData = "Data";
         public const string CategoryFile = "File";

@@ -36,6 +36,8 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
         {
             get { return _isValid; }
         }
+
+		[EditorHintFlags(MemberFlags.Invisible)]
         public dynamic JsonObject
         {
             get { return _jsonObject; }

@@ -51,13 +51,22 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
             get { return _bytes; }
         }
 
-        /// <summary>
-        /// [GET] The encoding of the source file
-        /// </summary>
+		/// <summary>
+		/// [GET] The encoding of the source file
+		/// </summary>
+		[EditorHintFlags(MemberFlags.Invisible)]
         public Encoding Encoding
         {
             get { return _encoding; }
         }
+
+		/// <summary>
+		/// [GET] The encoding of the source file
+		/// </summary>
+		public string FileEncoding
+		{
+			get { return _encoding == null ? "UNKNOWN" : _encoding.WebName; }
+		}
 
         /// <summary>
         /// Creates an empty file if it's not already existing.
