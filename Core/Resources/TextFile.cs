@@ -101,9 +101,13 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
             _content = content;
             _bytes = length;
             _encoding = encoding;
-
-            AfterLoad();
         }
+
+		protected override void OnLoaded()
+		{
+			base.OnLoaded();
+			AfterLoad();
+		}
 
         /*
         public void SaveFile(string filePath)

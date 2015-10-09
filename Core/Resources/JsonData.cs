@@ -19,7 +19,9 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
     public class JsonData : TextFile
     {
         private bool _isValid;
-        private dynamic _jsonObject;
+		
+		[DontSerialize]
+        private JObject _jsonObject;
 
         /// <summary>
         /// Creates a new, empty JsonData.
@@ -38,7 +40,7 @@ namespace SnowyPeak.Duality.Plugin.Data.Resources
         }
 
 		[EditorHintFlags(MemberFlags.Invisible)]
-        public dynamic JsonObject
+		public JObject JsonObject
         {
             get { return _jsonObject; }
         }
