@@ -5,3 +5,5 @@ Editor/obj
 nupkgs
 packages
 *.suo
+*.dll
+DualityEditor/bin/Release/Plugins/SnowyPeak.Duality.Data.editor.dll

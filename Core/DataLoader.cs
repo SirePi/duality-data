@@ -1,17 +1,12 @@
 ﻿using Duality;
 using Duality.IO;
 using SnowyPeak.Duality.Plugin.Data.Resources;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SnowyPeak.Duality.Plugin.Data
 {
 	/// <summary>
-	/// 
+	///
 	/// </summary>
 	public class DataLoader
 	{
@@ -25,7 +20,7 @@ namespace SnowyPeak.Duality.Plugin.Data
 		{
 			T result = null;
 
-			if(FileOp.Exists(path))
+			if (FileOp.Exists(path))
 			{
 				using (Stream s = FileOp.Open(path, FileAccessMode.Read))
 				using (StreamReader sr = new StreamReader(s))
